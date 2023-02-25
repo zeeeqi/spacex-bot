@@ -18,7 +18,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_photo(chat_id=update.effective_chat.id, photo='https://www.iebschool.com/blog/wp-content/uploads/2022/11/image-49.png')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f'{VIDEO_API}/{random.randint(0, 61695)}/')
+    await context.bot.send_photo(chat_id=update.effective_chat.id, photo=f'{VIDEO_API}/{random.randint(0, 61695)}/')
     # await context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
 if __name__ == '__main__':
