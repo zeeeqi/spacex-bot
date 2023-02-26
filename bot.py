@@ -5,7 +5,8 @@ import random
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters, PicklePersistence
 
-BOT_TOKEN = os.environ.get('BOT_TOKEN', None)
+BOT_TOKEN = '6207733786:AAF2cSSIJTgxldRT7IwkH2Tm1clSKLGU9jk'
+
 VIDEO_API = 'https://framex-dev.wadrid.net/api/video/Falcon%20Heavy%20Test%20Flight%20(Hosted%20Webcast)-wbSwFU6tY1c/frame'
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -22,9 +23,8 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    persistence = PicklePersistence(filepath='persistent_data')
-    application = ApplicationBuilder().token(BOT_TOKEN).persistence(persistence=persistence).build()
-
+    persistence = PicklePersistence(filepath=os.path.join(os.path.dirname(__file__), 'data.pickle'))
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
     echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
 
