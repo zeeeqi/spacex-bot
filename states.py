@@ -46,7 +46,7 @@ async def handle_first_choice(update: Update, context: ContextTypes.DEFAULT_TYPE
     """
 
     message = update.message.text
-    if message.lower() in ["yes, i will help!", "yes"]:
+    if message.lower() in ["yes, i will help!", "yes", "si"]:
         await update.message.reply_text(
             "Great! I will show you frames from the SpaceX Falcon Heavy launch. "
             "Please tell me if it has launched yet.",
@@ -93,14 +93,15 @@ async def finding_launch(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if check_if_launch(user):
         await update.message.reply_text(
             f"I think the launch happened on frame {user['frame']}. "
-            "Thanks for helping me!"
+            "Thanks for helping me!",
+            reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
 
     frame_url = SpaceXAPI().get_frame_url(next_frame)
     await update.message.reply_photo(
         frame_url,
-        caption=f'Has it launched yet?',
+        caption=f'{next_frame} - Has it launched yet?',
         reply_markup=YES_NO_MARKUP,
     )
     return FINDING_LAUNCH
