@@ -50,10 +50,13 @@ async def handle_first_choice(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text(
             "Great! I will show you frames from the SpaceX Falcon Heavy launch. "
             "Please tell me if it has launched yet.",
-            reply_markup=YES_NO_MARKUP,
         )
         frame_url = SpaceXAPI().get_frame_url(context.user_data['frame'])
-        await update.message.reply_photo(frame_url)
+        await update.message.reply_photo(
+            frame_url,
+            caption=f'{context.user_data["frame"]} - Has it launched yet?',
+            reply_markup=YES_NO_MARKUP,
+        )
         return FINDING_LAUNCH
     else:
         await update.message.reply_text("Oh, that's too bad... Hope to see you back soon!")
@@ -94,12 +97,12 @@ async def finding_launch(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
         return ConversationHandler.END
 
-    await update.message.reply_text(
-        f"Please tell me if it has launched yet.",
+    frame_url = SpaceXAPI().get_frame_url(next_frame)
+    await update.message.reply_photo(
+        frame_url,
+        caption=f'Has it launched yet?',
         reply_markup=YES_NO_MARKUP,
     )
-    frame_url = SpaceXAPI().get_frame_url(next_frame)
-    await update.message.reply_photo(frame_url)
     return FINDING_LAUNCH
 
 
