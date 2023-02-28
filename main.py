@@ -36,10 +36,10 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             FIRST_CHOOSE: [
-                MessageHandler(filters.Regex(re.compile(r'(yes|no)', re.IGNORECASE)), handle_first_choice),
+                MessageHandler(filters.Regex(re.compile(r'(yes|no|si)', re.IGNORECASE)), handle_first_choice),
             ],
             FINDING_LAUNCH: [
-                MessageHandler(filters.Regex(re.compile(r'(yes|no)', re.IGNORECASE)), finding_launch),
+                MessageHandler(filters.Regex(re.compile(r'(yes|no|si)', re.IGNORECASE)), finding_launch),
             ],
 
         },
