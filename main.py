@@ -1,5 +1,7 @@
 import logging
 from os import getenv
+import re
+
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -34,14 +36,14 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             FIRST_CHOOSE: [
-                MessageHandler(filters.Regex("^(Yes, I will help!|No, sorry...|si)$/iu"), handle_first_choice),
+                MessageHandler(filters.Regex(re.compile(r'(yes|no)', re.IGNORECASE)), handle_first_choice),
             ],
             FINDING_LAUNCH: [
-                MessageHandler(filters.Regex("^(Yes|No)$/iu"), finding_launch),
+                MessageHandler(filters.Regex(re.compile(r'(yes|no)', re.IGNORECASE)), finding_launch),
             ],
 
         },
-        fallbacks=[MessageHandler(filters.Regex("^End$/iu"), handle_end)],
+        fallbacks=[MessageHandler(filters.Regex(re.compile(r'end', re.IGNORECASE)), handle_end)],
     )
 
     application.add_handler(conv_handler)
