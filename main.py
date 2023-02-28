@@ -34,14 +34,14 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             FIRST_CHOOSE: [
-                MessageHandler(filters.Regex("^(Yes, I will help!|No, sorry...)$"), handle_first_choice),
+                MessageHandler(filters.Regex("^(Yes, I will help!|No, sorry...|si)$/iu"), handle_first_choice),
             ],
             FINDING_LAUNCH: [
-                MessageHandler(filters.Regex("^(Yes|No)$"), finding_launch),
+                MessageHandler(filters.Regex("^(Yes|No)$/iu"), finding_launch),
             ],
 
         },
-        fallbacks=[MessageHandler(filters.Regex("^End$"), handle_end)],
+        fallbacks=[MessageHandler(filters.Regex("^End$/iu"), handle_end)],
     )
 
     application.add_handler(conv_handler)
